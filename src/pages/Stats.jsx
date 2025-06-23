@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from 'react';
+import { Grid, Typography } from '@mui/material';
+
 function Stats() {
   const [data, setData] = useState([]);
 
@@ -12,14 +15,14 @@ function Stats() {
       {data.map(item => (
         <Grid item xs={12} key={item.id}>
           <Typography>
-            Short URL: <a href={`/${item.id}`} target="_blank">http://localhost:3000/{item.id}</a>
+            Short URL: <a href={`/${item.id}`} target="_blank" rel="noopener noreferrer">http://localhost:3000/{item.id}</a>
           </Typography>
           <Typography>Original URL: {item.longUrl}</Typography>
           <Typography>Created At: {new Date(item.createdAt).toLocaleString()}</Typography>
           <Typography>Expires At: {new Date(item.expiresAt).toLocaleString()}</Typography>
-          <Typography>Total Clicks: {item.clicks.length}</Typography>
+          <Typography>Total Clicks: {item.clicks ? item.clicks.length : 0}</Typography>
           <ul>
-            {item.clicks.map((click, idx) => (
+            {(item.clicks || []).map((click, idx) => (
               <li key={idx}>
                 {click.timestamp} - {click.source} - {click.location}
               </li>
@@ -30,3 +33,5 @@ function Stats() {
     </Grid>
   );
 }
+
+export default Stats;
