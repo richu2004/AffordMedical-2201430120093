@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Stats from './pages/Stats';
@@ -16,7 +17,7 @@ function Redirector() {
       alert('Link expired!');
       return navigate('/');
     }
-
+if(!entry.clicks) entry.clicks = [];
     entry.clicks.push({
       timestamp: now.toISOString(),
       source: document.referrer || 'Direct',
@@ -25,7 +26,7 @@ function Redirector() {
     localStorage.setItem('urls', JSON.stringify(urls));
 
     window.location.href = entry.longUrl;
-  }, [code]);
+  }, [code, navigate]);
 
   return <p>Redirecting...</p>;
 }
@@ -41,3 +42,5 @@ function App() {
     </BrowserRouter>
   );
 }
+
+export default App;
